@@ -4,7 +4,7 @@ import { Person } from "./person"
 class CounterIDService {
     id: number;
     constructor() {
-        this.id = 0;
+        this.id = 5;
     }
     newId() {
         this.id++;
@@ -29,8 +29,8 @@ export class PersonService {
     }
 
     findById(id: number): Person {
-        const personFound =  this.persons.filter((person) => person.id === id);
-        return personFound[0];
+        const queryResult =  this.persons.filter((person) => person.id == id);
+        return queryResult[0];
     }
 
     create(newPerson: Person) {
@@ -38,12 +38,18 @@ export class PersonService {
         this.persons.push(newPerson)
     }
 
-    update() {
+    update(id: number, newData: Person) {
 
+        this.persons.forEach((person) => { 
+            if(person.id == id) {
+                person.name = newData.name;
+            }}
+        )
     }
 
-    delete() {
-
+    delete(id: number) {
+        const queryResult = this.persons.findIndex((person) => person.id == id);
+        this.persons.splice(queryResult, 1)
     }
 
 }

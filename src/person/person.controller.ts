@@ -11,30 +11,30 @@ export class PersonController {
     @Get()
     findAll(@Res() response: Response) {
         const list = this.personService.findAll();
-        return response.status(200).send(list);;
+        return response.status(200).send(list);
     }
 
     @Get('/:id')
-    findById(@Res() response: Response) {
-        const list = this.personService.findById();
+    findById(@Param('id') id: number, @Res() response: Response) {
+        const list = this.personService.findById(id);
         return response.status(200).send(list);
     }
 
     @Post()
-    create(@Body() bodyRequest: Person @Res() response: Response) {
+    create(@Body() bodyRequest: Person, @Res() response: Response) {
         const personCreated = this.personService.create(bodyRequest);
-        return response.status(200).send(personCreated);;
+        return response.status(201).send(personCreated);
     }
 
     @Put('/:id')
-    update(@Param('id') id: number, @Res() response: Response) {
-        const personUpdated = this.personService.update(id);
-        return response.status(200).send(personUpdated);;
+    update(@Param('id') id: number, @Body() bodyRequest: Person, @Res() response: Response) {
+        const personUpdated = this.personService.update(id, bodyRequest);
+        return response.status(200).send(personUpdated);
     }
 
-    @Delete()
-    delete(@Res() response: Response) {
-        const list = this.personService.delete();
-        return response.status(200).send(list);;
+    @Delete('/:id')
+    delete(@Param('id') id: number, @Res() response: Response) {
+        const list = this.personService.delete(id);
+        return response.status(200).send(list);
     }
 }
